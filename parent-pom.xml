@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ecjtu.web</groupId>
+  <artifactId>web-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>web-front</module>
+    <module>web-skeleton</module>
+    <module>web-endpoint</module>
+  </modules>
+  <name>web-parent Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <!--项目属性-->
+  <properties>
+    <!--公用属性-->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+
+    <!--版本-->
+    <velocity.version>2.0</velocity.version>
+    <mybatis.plus.version>2.1.8</mybatis.plus.version>
+    <spring.version>4.3.13.RELEASE</spring.version>
+
+    <!--tomcat 数据库连接池，换掉-->
+    <tomcat.version>7.0.29</tomcat.version>
+    <mysql.connector.version>6.0.6</mysql.connector.version>
+  </properties>
+
+
+  <dependencies>
+    <!--dubbo 服务包 begin-->
+
+    <!--dubbo 服务包 end-->
+
+    <!--利用mybatis plus插件生成前后端代码 begin-->
+    <!--mybatis plus插件，会引入mybatis和mybatis-spring-->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>${velocity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus</artifactId>
+      <version>${mybatis.plus.version}</version>
+    </dependency>
+    <!--利用mybatis plus插件生成前后端代码 end-->
+
+    <!--数据库连接 begin-->
+    <!--tomcat 数据库连接池-->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jdbc</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-juli</artifactId>
+      <version>${tomcat.version}</version>
+    </dependency>
+    <!-- mysql连接 -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql.connector.version}</version>
+    </dependency>
+    <!--数据库连接 end-->
+
+    <!--spring begin-->
+    <!-- spring mvc 包，引入spring相关的所有包 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <!--spring end-->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  
+  <build>
+    <finalName>web-parent</finalName>
+  </build>
+</project>
