@@ -1,0 +1,331 @@
+package com.ecjtu.web;
+
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.DbType;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * <p>
+ * 代码生成器演示
+ * </p>
+ */
+public class CodeGenerator {
+
+    public static void main(String[] args) {
+        //后端服务文件生成
+        String endPointDir = "D:\\kakashiSVN\\self_project\\lol-we\\web-parent\\web-endpoint\\src\\main\\java\\";
+        String mapperXml = "D:\\kakashiSVN\\self_project\\lol-we\\web-parent\\web-endpoint\\src\\main\\resources\\mybatis-mapper\\";
+        generatorEndpoint(endPointDir, mapperXml);
+
+        //生成接口dto
+        String skeletonDir = "D:\\kakashiSVN\\self_project\\lol-we\\web-parent\\web-skeleton\\src\\main\\java\\";
+        generatorSkeleton(skeletonDir);
+
+        //前端controller和jsp生成
+        String frontDir = "D:\\kakashiSVN\\self_project\\lol-we\\web-parent\\web-front\\src\\main\\java\\";
+        generatorFront(frontDir);
+
+    }
+
+    /**
+     * 生成接口dto
+     * @param skeletonDir
+     */
+    public static void generatorSkeleton(String skeletonDir){
+        AutoGenerator mpg = new AutoGenerator();
+
+        //1、全局配置
+        globalConfig(mpg, skeletonDir);
+        //2、数据源配置
+        dataSourceConfig(mpg);
+        //3、策略配置
+        strategyConfig(mpg);
+        //4、包配置
+        packageConfig(mpg, "com.ecjtu.web.skeleton", null);
+        //5、注入配置
+        injectionConfig(mpg);
+
+        TemplateConfig tc = new TemplateConfig();
+        tc.setEntity(null);
+        tc.setMapper(null);
+        tc.setXml(null);
+        tc.setController(null);
+        tc.setService(null);
+        tc.setServiceImpl(null);
+        mpg.setTemplate(tc);
+
+        // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
+        // 放置自己项目的 src/main/resources/templates 目录下, 默认名称一下可以不配置，也可以自定义模板名称
+        // TemplateConfig tc = new TemplateConfig();
+        // tc.setController("...");
+        // tc.setEntity("...");
+        // tc.setMapper("...");
+        // tc.setXml("...");
+        // tc.setService("...");
+        // tc.setServiceImpl("...");
+        // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
+        // mpg.setTemplate(tc);
+
+        // 执行生成
+        mpg.execute();
+    }
+
+    /**
+     * 生成前端接口相关文件
+     * 生成jsp、controller和前端用service
+     */
+    public static void generatorFront(String outPutDir){
+        AutoGenerator mpg = new AutoGenerator();
+
+        //1、全局配置
+        globalConfig(mpg, outPutDir);
+        //2、数据源配置
+        dataSourceConfig(mpg);
+        //3、策略配置
+        strategyConfig(mpg);
+        //4、包配置
+        packageConfig(mpg, "com.ecjtu.web.front", null);
+        //5、注入配置
+        injectionConfig(mpg);
+        //6、jsp
+//        jspCofig(mpg, "",
+//                "D:\\kakashiSVN\\self_project\\lol-we\\web-parent\\web-front\\src\\main\\webapp\\WEB-INF\\jsp\\");
+
+        TemplateConfig tc = new TemplateConfig();
+        // 关闭默认 entity 生成
+        tc.setEntity(null);
+        // 关闭默认 dao 生成
+        tc.setMapper(null);
+        // 关闭默认 xml 生成
+        tc.setXml(null);
+        mpg.setTemplate(tc);
+
+        // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
+        // 放置自己项目的 src/main/resources/templates 目录下, 默认名称一下可以不配置，也可以自定义模板名称
+        // TemplateConfig tc = new TemplateConfig();
+        // tc.setController("...");
+        // tc.setEntity("...");
+        // tc.setMapper("...");
+        // tc.setXml("...");
+        // tc.setService("...");
+        // tc.setServiceImpl("...");
+        // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
+        // mpg.setTemplate(tc);
+
+        // 执行生成
+        mpg.execute();
+    }
+
+    /**
+     * 生成后端服务相关文件
+     * 生成服务service、dao和mapper.xml文件
+     */
+    public static void generatorEndpoint(String outPutDir, String mapperXmlPath){
+        AutoGenerator mpg = new AutoGenerator();
+
+        //1、全局配置
+        globalConfig(mpg, outPutDir);
+        //2、数据源配置
+        dataSourceConfig(mpg);
+        //3、策略配置
+        strategyConfig(mpg);
+        //4、包配置
+        packageConfig(mpg, "com.ecjtu.web.endpoint", null);
+        //5、注入配置
+        injectionConfig(mpg);
+        //6、生成xml
+        mapperXmlConfig(mpg,
+                mapperXmlPath);
+
+        TemplateConfig tc = new TemplateConfig();
+        // 关闭默认 xml 生成，调整生成目录
+        tc.setXml(null);
+        // 关闭生成controller
+        tc.setController(null);
+        mpg.setTemplate(tc);
+
+        // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
+        // 放置自己项目的 src/main/resources/templates 目录下, 默认名称一下可以不配置，也可以自定义模板名称
+        // TemplateConfig tc = new TemplateConfig();
+        // tc.setController("...");
+        // tc.setEntity("...");
+        // tc.setMapper("...");
+        // tc.setXml("...");
+        // tc.setService("...");
+        // tc.setServiceImpl("...");
+        // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
+        // mpg.setTemplate(tc);
+
+        // 执行生成
+        mpg.execute();
+    }
+
+    /**
+     * jsp生成
+     * @param mpg
+     * @param jspTempPath
+     * @param jspPath
+     */
+    public static void jspCofig(AutoGenerator mpg, final String jspTempPath, final String jspPath){
+        // 自定义 xxList.jsp 生成
+        List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
+        focList.add(new FileOutConfig(jspTempPath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输入文件名称
+                return jspPath + tableInfo.getEntityName() + ".jsp";
+            }
+        });
+        mpg.getCfg().getFileOutConfigList().addAll(focList);
+    }
+
+    /**
+     * 生成mapper.xml
+     */
+    public static void mapperXmlConfig(AutoGenerator mpg, final String mapperXmlPath){
+        List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
+        // 调整 xml 生成目录演示
+        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return mapperXmlPath + tableInfo.getEntityName() + ".xml";
+            }
+        });
+        mpg.getCfg().getFileOutConfigList().addAll(focList);
+    }
+
+    /**
+     * 注入变量配置
+     */
+    public static void injectionConfig(AutoGenerator mpg){
+        // 注入自定义配置，可以在 VM 中使用 cfg.abc 【可无】
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<String, Object>();
+                //map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                this.setMap(map);
+            }
+        };
+
+        cfg.setFileOutConfigList(new ArrayList<FileOutConfig>());
+        mpg.setCfg(cfg);
+    }
+
+    /**
+     * 包配置
+     * @param mpg
+     */
+    public static void packageConfig(AutoGenerator mpg, String parent, String moduleName){
+        // 包配置
+        PackageConfig pc = new PackageConfig();
+        pc.setParent(parent);
+        pc.setController("controller");
+        pc.setMapper("dao");
+        if(StringUtils.isNotBlank(moduleName)){
+            pc.setModuleName(moduleName);
+        }
+        mpg.setPackageInfo(pc);
+
+    }
+
+    /**
+     * 生成策略配置
+     */
+    public static void strategyConfig(AutoGenerator mpg){
+        // 策略配置
+        StrategyConfig strategy = new StrategyConfig();
+        // 全局大写命名 ORACLE 注意
+        // strategy.setCapitalMode(true);
+        // 此处可以修改为您的表前缀
+        strategy.setTablePrefix(new String[]{"t_"});
+        // 表名生成策略
+        strategy.setNaming(NamingStrategy.underline_to_camel);
+        // 需要生成的表
+        strategy.setInclude(new String[] { "t_area_assigneeconfig" });
+        // 排除生成的表
+        // strategy.setExclude(new String[]{"test"});
+        // 自定义实体父类
+        // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");
+        // 自定义实体，公共字段
+        // strategy.setSuperEntityColumns(new String[] { "test_id", "age" });
+        // 自定义 mapper 父类
+        // strategy.setSuperMapperClass("com.baomidou.demo.TestMapper");
+        // 自定义 service 父类
+        // strategy.setSuperServiceClass("com.baomidou.demo.TestService");
+        // 自定义 service 实现类父类
+        // strategy.setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl");
+        // 自定义 controller 父类
+        // strategy.setSuperControllerClass("com.baomidou.demo.TestController");
+        // 【实体】是否生成字段常量（默认 false）
+        // public static final String ID = "test_id";
+        // strategy.setEntityColumnConstant(true);
+        // 【实体】是否为构建者模型（默认 false）
+        // public User setName(String name) {this.name = name; return this;}
+        // strategy.setEntityBuilderModel(true);
+        mpg.setStrategy(strategy);
+    }
+
+    /**
+     * 配置数据源
+     */
+    public static void dataSourceConfig(AutoGenerator mpg){
+        // 数据源配置
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setDbType(DbType.MYSQL);
+        dsc.setTypeConvert(new MySqlTypeConvert() {
+            // 自定义数据库表字段类型转换【可选】
+            @Override
+            public DbColumnType processTypeConvert(String fieldType) {
+                System.out.println("转换类型：" + fieldType);
+                // 注意！！processTypeConvert 存在默认类型转换，如果不是你要的效果请自定义返回、非如下直接返回。
+                return super.processTypeConvert(fieldType);
+            }
+        });
+        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setUsername("ag_pn_goldencms");
+        dsc.setPassword("k3c6d046ffa8j9ux73uy");
+        dsc.setUrl("jdbc:mysql://10.11.16.205:3306/ag_pn_goldencms?characterEncoding=utf8");
+        mpg.setDataSource(dsc);
+    }
+
+    /**
+     * 全局配置
+     */
+    public static void globalConfig(AutoGenerator mpg, String outPutDir){
+        // 全局配置
+        GlobalConfig gc = new GlobalConfig();
+        gc.setOutputDir(outPutDir);
+        // 不需要ActiveRecord特性的请改为false
+        gc.setActiveRecord(false);
+        // XML 二级缓存
+        gc.setEnableCache(false);
+        // XML ResultMap
+        gc.setBaseResultMap(true);
+        // XML columList
+        gc.setBaseColumnList(false);
+        // .setKotlin(true) 是否生成 kotlin 代码
+        gc.setAuthor("youyoushui");
+
+        // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        gc.setMapperName("%sDao");
+        gc.setXmlName("%sMapper");
+        gc.setServiceName("%sService");
+        gc.setServiceImplName("%sServiceImpl");
+        gc.setControllerName("%sController");
+        gc.setFileOverride(true);
+        mpg.setGlobalConfig(gc);
+    }
+
+}
